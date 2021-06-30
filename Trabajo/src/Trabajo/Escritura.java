@@ -64,12 +64,14 @@ public class Escritura {
 	public void ordenar(double A[],String B[]) {
 		for(int i=0;i<A.length;i++) {
 			double valor=A[i];
+			String a=B[i];
 			int posicion=i;
 			while((posicion>0)&&(A[posicion-1]>valor)) {
 				A[posicion]=A[posicion-1];
 				B[posicion]=B[posicion-1];
 				posicion=posicion-1;
 			}
+			B[posicion]=a;
 			A[posicion]=valor;
 		}
 	}

@@ -7,7 +7,7 @@ public class TareaCurso {
 		Escritura obj= new Escritura();
 		boolean b,a;int resp=0;int CC=0;int CV=0;int impc=0;int impv=0;int seg=0;int hallado=0;
 		int fact=0;double Tfact=0;double TfactI=0;double impuestosC=0;double impuestosV=0;
-		int  busq=0;double nb=0;int ord=0;
+		int  busq=0;double nb=0;int ord=0;int h=0;double bus[]=null;double bus1[]=null;
 		System.out.println("Sistema automatico de inventario compras y ventas");
 		do {
 			System.out.println();
@@ -59,7 +59,7 @@ public class TareaCurso {
 	switch(resp) {
 		case 1:
 			System.out.println();
-			System.out.println("Ingrese la cantidad de compras que ha realizado");
+			System.out.println("Ingrese la cantidad de diferentes productos comprados");
 			do {
 			try {
 				a=false;
@@ -91,6 +91,7 @@ public class TareaCurso {
 			 nomP=new String[CC];
 			 precP=new double[CC];
 			 total=new double[CC];
+			 bus=new double[CC];
 			 System.out.println();
 			System.out.println("Se les aplicó impuestos a los productos comprados?");
 			System.out.println("1. Si");
@@ -151,6 +152,36 @@ public class TareaCurso {
 						a=true;
 					}
 					}while(a);
+				bus[i]=precP[i];
+				System.out.println("Que cantidad de este producto ha comprado?");
+				do {
+					try {
+						a=false;
+					h=lector.nextInt();
+					if(h<=0){
+						while(h<=0) {
+						System.out.println("Respuesta incorrecta(R<=0)");
+						System.out.println("Ingrese nuevamente");
+						do{
+							try {
+								b=false;
+							h=lector.nextInt();
+						}catch(InputMismatchException ex) {
+							lector.next();
+							System.out.println("Ingrese una respuesta adecuada");
+							b=true;
+						}
+					}while(b);
+					}
+					}
+					}catch(InputMismatchException ex) {
+						lector.next();
+						System.out.println("Ingrese una respuesta adecuada");
+						a=true;
+					}
+					}while(a);
+				precP[i]=precP[i]*h;
+				System.out.println(bus[i]);
 				if(impc==1) {
 					impuestosC=impuestosC+((precP[i]*0.15)-(precP[i]*0.02));
 					total[i]=((precP[i]*0.15)-(precP[i]*0.02))+precP[i];
@@ -197,7 +228,7 @@ public class TareaCurso {
 					}
 					CA1.escribirC(unionIC);
 				}else {
-					for(int i=0;i<unionIC.length;i++) {
+					for(int i=0;i<unionC.length;i++) {
 						unionC[i]=" "+nomP[i]+" = C$"+precP[i];
 						
 					}
@@ -269,7 +300,7 @@ public class TareaCurso {
 					}
 					}while(a);
 
-				 hallado= obj.busqueda(precP,precP.length, nb);
+				 hallado= obj.busqueda(bus,bus.length, nb);
 				if(hallado!=-1) {
 					System.out.println("El precio de C$"+nb+" lo tiene el producto: "+nomP[hallado]);
 				}else {
@@ -363,13 +394,16 @@ public class TareaCurso {
 						System.out.println(nomP[i]+" = C$"+precP[i]);
 					}
 					System.out.println("Total = C$"+Tfact);
+					
 				}
+				
+				
 			}
 		break;
 		}
 		case 2:
 			System.out.println();
-			System.out.println("Ingrese la cantidad de productos que ha vendido");
+			System.out.println("Ingrese la cantidad de diferentes productos vendidos");
 			do {
 			try {
 				a=false;
@@ -461,6 +495,36 @@ public class TareaCurso {
 						a=true;
 					}
 					}while(a);
+				bus1=new double[CV];
+				bus1[i]=precPv[i];
+				System.out.println("Que cantidad de este producto ha vendido?");
+				do {
+					try {
+						a=false;
+					h=lector.nextInt();
+					if(h<=0){
+						while(h<=0) {
+						System.out.println("Respuesta incorrecta(R<=0)");
+						System.out.println("Ingrese nuevamente");
+						do{
+							try {
+								b=false;
+							h=lector.nextInt();
+						}catch(InputMismatchException ex) {
+							lector.next();
+							System.out.println("Ingrese una respuesta adecuada");
+							b=true;
+						}
+					}while(b);
+					}
+					}
+					}catch(InputMismatchException ex) {
+						lector.next();
+						System.out.println("Ingrese una respuesta adecuada");
+						a=true;
+					}
+					}while(a);
+				precPv[i]=precPv[i]*h;
 				if(impv==1) {
 					impuestosV=(impuestosV)+(precPv[i]*0.15)-(precPv[i]*0.02);
 					totalv[i]=((precPv[i]*0.15)-(precPv[i]*0.02))+precPv[i];
@@ -578,7 +642,7 @@ public class TareaCurso {
 					}
 					}while(a);
 
-				 hallado= obj.busqueda(precPv,precPv.length, nb);
+				 hallado= obj.busqueda(bus1,bus1.length, nb);
 				if(hallado!=-1) {
 					System.out.println("El precio de C$"+nb+" lo tiene el producto: "+nomPv[hallado]);
 				}else {
@@ -789,7 +853,6 @@ public class TareaCurso {
 				}
 				}while(a);
 			 nb=0;
-			
 			if(busq==1) {
 				System.out.println("Eliga una opcion:");
 				System.out.println("1. Buscar en compras");
@@ -850,7 +913,7 @@ public class TareaCurso {
 					}
 					}while(a);
 
-				 hallado= obj.busqueda(precP,precP.length, nb);
+				 hallado= obj.busqueda(bus,bus.length, nb);
 				if(hallado!=-1) {
 					System.out.println("El precio de C$"+nb+" lo tiene el producto: "+nomP[hallado]);
 				}else {
@@ -887,7 +950,7 @@ public class TareaCurso {
 						}
 						}while(a);
 
-					 hallado= obj.busqueda(precPv,precPv.length, nb);
+					 hallado= obj.busqueda(bus1,bus1.length, nb);
 					if(hallado!=-1) {
 						System.out.println("El precio de C$"+nb+" lo tiene el producto: "+nomPv[hallado]);
 					}else {
@@ -1008,6 +1071,7 @@ public class TareaCurso {
 				}
 				}while(a);
 			if(fact==1) {
+
 				System.out.println();
 				System.out.println("COMPRAS!!");
 				if(impc==1) {	
